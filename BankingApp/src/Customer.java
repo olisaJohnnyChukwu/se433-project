@@ -5,7 +5,7 @@ public class Customer {
     String Address;
     String PhoneNumber;
     String EmailAddress;
-//    ArrayList<Account> Accounts;
+    ArrayList<Account> Accounts;
     ArrayList<Loan> Loans;
 
     public Customer(String name, String address, String phone, String email) {

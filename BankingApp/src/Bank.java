@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Bank {
     public String name;
     public ArrayList<Customer> Customers;
-//    private ArrayList<Account> Accounts;
+    private ArrayList<Account> Accounts;
     public ArrayList<Loan> Loans;
 
     public Bank(String name) {
