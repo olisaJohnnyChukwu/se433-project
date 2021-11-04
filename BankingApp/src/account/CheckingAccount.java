@@ -1,5 +1,8 @@
-import java.util.ArrayList;
-import java.util.Date;
+package account;
+import java.util.*;
+import transaction.*;
+
+import customer.*;
 
 public class CheckingAccount extends Account {
     private static final double minimumBalance = 250.00;
@@ -8,12 +11,14 @@ public class CheckingAccount extends Account {
     private double averageDailyBalance;
     private Date openingDate;
 
-    public CheckingAccount(String accountNumber, double balance, ArrayList<Transaction> transactions) {
-        super(accountNumber, balance, transactions);
+    public CheckingAccount(String accountNumber, double balance) {
+        super(accountNumber, balance);
+        
+        
     }
 
     public Date getOpeningDate() {
-        return openingDate;
+        return this.openingDate;
     }
 
     public void setOpeningDate(Date openingDate) {

@@ -1,27 +1,30 @@
+package account;
+import java.util.*;
+import transaction.*;
+import customer.*;
+import bank.*;
 
-import java.util.ArrayList;
 
 public abstract class Account {
     private String accountNumber;
     private double balance;
-    private ArrayList<Transaction> transactions;
-    //private Bank bank;
+    private ArrayList<Transaction> transactions=new ArrayList<>();
     private double interestRate;
-    private double interestEarned;
-    private double minimumBalance;
-    private int maxTransactionNumber;
+    private  double interestEarned;
+    private  double minimumBalance;
+    private  int maxTransactionNumber;
     public static final double time = 0.0833;
-    private double averageDailyBalance;
-    private int countTransactions;
-    private Customer customer;
-    private ArrayList<Customer> customers;
+    private  double averageDailyBalance;
+    private  int countTransactions;
+    
+    //private ArrayList<Customer> customers;
 
 
-    public Account(String accountNumber, double balance, ArrayList<Transaction> transactions) {
+    public Account(String accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.transactions = transactions;
-        customers = new ArrayList<>();
+       
+       // customers = new ArrayList<>();
     }
 
     public double getInterestRate() {
@@ -51,8 +54,10 @@ public abstract class Account {
     public void debitAmount(double debit) {
         if (debit > 0) {
             if (balance >= debit) {
-                this.balance -= debit;
-                transactions.add(new Transaction(debit));
+                Transaction transaction =new DepositTransaction(debit);
+                this.balance=transaction.apply(balance);
+                transactions.add(transaction);
+                
             } else {
                 System.out.println("Insufficient funds.");
             }
@@ -78,26 +83,37 @@ public abstract class Account {
 
     public void transferAmount(Account toAccount, double transferAmount) {
         if (this.getBalance() > 0 && transferAmount > 0) {
-            toAccount.setBalance(toAccount.balance += transferAmount);
-            this.balance -= transferAmount;
-            transactions.add(new Transaction(transferAmount));
+           // toAccount.setBalance(toAccount.balance += transferAmount);
+            //this.balance -= transferAmount;
+           // transactions.add(new Transaction(transferAmount));
+           Transaction transaction=new TransferTransaction(transferAmount, toAccount,this);
+           this.balance=transaction.apply(balance);
+           transactions.add(transaction);
             countTransactions++;
         } else {
             System.out.println("Insufficient funds.");
         }
     }
 
-
+    public void Recieve(Account fromAccount,double debit){
+        
+        Transaction transaction =new RecieveTransaction(debit, fromAccount);
+        this.balance=transaction.apply(balance);
+        transactions.add(transaction);
+    }
     public void creditAmount(double credit) {
         if (credit > 0) {
-            this.balance += credit;
-            transactions.add(new Transaction(credit));
+            //this.balance += credit;
+            Transaction transaction =new WithdrawTransaction(credit);
+            this.balance=transaction.apply(balance);
+            transactions.add(transaction);
             countTransactions++;
         } else {
             System.out.println("Credit amount must be greater than zero.");
         }
     }
 
+    
     public String getAccountNumber() {
         return accountNumber;
     }
@@ -123,6 +139,14 @@ public abstract class Account {
         balance += interestEarned;
     }
 
+    public String printBankStatement(){
+        String statement="";
+        for(Transaction t:transactions){
+            statement+=t.printTransaction()+"\n";
+
+        }
+        return statement;        
+    }
     /*public void deposit(double deposit) {
         if (deposit <= 0) {
             System.out.println("The deposit amount must be greater than zero.");
@@ -134,7 +158,7 @@ public abstract class Account {
         }
     }*/
 
-    public void addCustomer(Customer customer) {
+  /*  public void addCustomer(Customer customer) {
         if (customers.size() < 1) {
             this.customer = customer;
             customers.add(customer);
@@ -149,5 +173,8 @@ public abstract class Account {
         } else {
             System.out.println("This account does not have a customer");
         }
-    }
+    }*/
+
+
+
 }

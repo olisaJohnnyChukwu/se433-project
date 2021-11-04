@@ -1,4 +1,8 @@
-import java.util.ArrayList;
+package customer;
+import loan.*;
+import java.util.*;
+import bank.*;
+import account.*;
 
 public class Customer {
     String Name;
@@ -27,9 +31,9 @@ public class Customer {
         }
     }
 
-//    public void createAccount(Account account) {
-//
-//    }
+  public void createAccount(Account account) {
+
+    }
 
     public void applyForLoan(Bank bank, Double loanAmount) {
         bank.addCustomer(this);

@@ -1,3 +1,6 @@
+package loan;
+
+
 public class Loan {
     public double Amount;
     public double Interest;
