@@ -1,11 +1,15 @@
-import java.util.ArrayList;
+package customer;
+import loan.*;
+import java.util.*;
+import bank.*;
+import account.*;
 
 public class Customer {
     String Name;
     String Address;
     String PhoneNumber;
     String EmailAddress;
-//    ArrayList<Account> Accounts;
+    ArrayList<Account> Accounts;
     ArrayList<Loan> Loans;
 
     public Customer(String name, String address, String phone, String email) {
@@ -27,9 +31,9 @@ public class Customer {
         }
     }
 
-//    public void createAccount(Account account) {
-//
-//    }
+  public void createAccount(Account account) {
+        Accounts.add(account);
+    }
 
     public void applyForLoan(Bank bank, Double loanAmount) {
         bank.addCustomer(this);

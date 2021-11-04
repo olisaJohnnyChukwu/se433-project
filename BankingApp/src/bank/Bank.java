@@ -1,9 +1,15 @@
-import java.util.ArrayList;
+package bank;
+import transaction.*;
+import java.util.*;
+
+import account.*;
+import customer.*;
+import loan.*;
 
 public class Bank {
     public String name;
     public ArrayList<Customer> Customers;
-//    private ArrayList<Account> Accounts;
+     private ArrayList<Account> Accounts;
     public ArrayList<Loan> Loans;
 
     public Bank(String name) {
@@ -12,19 +18,19 @@ public class Bank {
         this.Loans = new ArrayList<>();
     }
 
-//    public void addAccount(Account account){
-//        Accounts.add(account);
-//    }
+public void addAccount(Account account){
+        Accounts.add(account);
+        }
 
     public void addCustomer(Customer customer) {
         Customers.add(customer);
     }
 
-//    public void removeAccount(Account account){
-//        if (Accounts.contains(account)) {
-//            Accounts.remove(account);
-//        }
-//    }
+  public void removeAccount(Account account){
+        if (Accounts.contains(account)) {
+            Accounts.remove(account);
+        }
+    }
 
     public void removeCustomer(Customer customer) {
         if (Customers.contains(customer)) {
@@ -56,6 +62,21 @@ public class Bank {
         Loan newLoan = new Loan(loanAmount, rate, ID, yearsToCompletion);
         Loans.add(newLoan);
         return newLoan;
+    }
+
+
+    public String generateAccountNumber(){
+  
+    Random rand = new Random();
+    String accountNo = "";
+    for (int i = 0; i < 14; i++)
+    {
+        int n = rand.nextInt(10);
+        accountNo += Integer.toString(n);
+    }
+   
+    return accountNo;
+    
     }
 
 }
