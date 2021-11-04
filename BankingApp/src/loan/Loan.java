@@ -19,7 +19,8 @@ public class Loan {
         return (Amount + (Amount * YearsTillCompletion * Interest)) / (YearsTillCompletion * 12);
     }
 
-//    public Double getPrepayment() {
-//
-//    }
+    //https://homeguides.sfgate.com/calculate-prepayment-penalty-mortgage-7571.html
+    public Double getPrepayment() {
+        return ((Amount * Interest) / 12) * 6;
+    }
 }

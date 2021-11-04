@@ -9,16 +9,17 @@ import loan.*;
 public class Bank {
     public String name;
     public ArrayList<Customer> Customers;
-     private ArrayList<Account> Accounts;
+    private ArrayList<Account> Accounts;
     public ArrayList<Loan> Loans;
 
     public Bank(String name) {
         this.name = name;
         this.Customers = new ArrayList<>();
         this.Loans = new ArrayList<>();
+        this.Accounts = new ArrayList<>();
     }
 
-public void addAccount(Account account){
+    public void addAccount(Account account){
         Accounts.add(account);
         }
 

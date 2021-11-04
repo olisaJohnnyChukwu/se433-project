@@ -5,12 +5,12 @@ import bank.*;
 import account.*;
 
 public class Customer {
-    String Name;
-    String Address;
-    String PhoneNumber;
-    String EmailAddress;
-    ArrayList<Account> Accounts;
-    ArrayList<Loan> Loans;
+    private String Name;
+    private String Address;
+    private String PhoneNumber;
+    private String EmailAddress;
+    private ArrayList<Account> Accounts;
+    private ArrayList<Loan> Loans;
 
     public Customer(String name, String address, String phone, String email) {
         this.Name = name;
@@ -18,12 +18,19 @@ public class Customer {
         this.PhoneNumber = phone;
         this.EmailAddress = email;
         this.Loans = new ArrayList<>();
+        this.Accounts = new ArrayList<>();
     }
 
-    public void payLoan(double payment, int LoanID) {
+    public void payLoan(double payment, int LoanID, Account account) {
         for (Loan l : Loans) {
             if (l.LoanID == LoanID) {
-                l.Amount -= payment;
+                if (Accounts.contains(account) && account.getBalance() >= payment) {
+                    l.Amount -= payment;
+                    l.YearsTillCompletion -= (1/12);
+                }
+                else {
+                    System.out.println("Insufficient funds. Please choose different account");
+                }
             }
             else {
                 System.out.println("LoanID not found, payment not processed");
