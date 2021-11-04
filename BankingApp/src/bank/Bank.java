@@ -71,7 +71,7 @@ public void addAccount(Account account){
     String accountNo = "";
     for (int i = 0; i < 14; i++)
     {
-        int n = rand.nextInt(10) + 0;
+        int n = rand.nextInt(10);
         accountNo += Integer.toString(n);
     }
    

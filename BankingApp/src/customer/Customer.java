@@ -32,7 +32,7 @@ public class Customer {
     }
 
   public void createAccount(Account account) {
-
+        Accounts.add(account);
     }
 
     public void applyForLoan(Bank bank, Double loanAmount) {
