@@ -49,7 +49,9 @@ public class Main {
 			System.out.printf("Loan" + l.LoanID + " Prepayment penalty: $%,.2f\n", l.getPrepayment());
 
 		}
+		System.out.println("Bryan acct balance before: " + bryan.getBalance());
 		cust1.payLoan(1000.00, 0, bryan);
+		System.out.println("Bryan acct balance after: " + bryan.getBalance());
 		for (Loan l: MainBank.Loans) {
 			System.out.printf("Loan" + l.LoanID + " $%,.2f\n", l.Amount);
 		}

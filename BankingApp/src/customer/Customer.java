@@ -27,6 +27,7 @@ public class Customer {
                 if (Accounts.contains(account) && account.getBalance() >= payment) {
                     l.Amount -= payment;
                     l.YearsTillCompletion -= (1/12);
+                    account.creditAmount(payment);
                 }
                 else {
                     System.out.println("Insufficient funds. Please choose different account");
