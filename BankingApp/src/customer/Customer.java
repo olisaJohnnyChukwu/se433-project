@@ -44,10 +44,8 @@ public class Customer {
     }
 
     public void applyForLoan(Bank bank, Double loanAmount) {
-        bank.addCustomer(this);
         Loan l = bank.addNewLoan(loanAmount);
-        if (l != null) {
-            Loans.add(l);
-        }
+        Loans.add(l);
+        bank.addCustomer(this);
     }
 }

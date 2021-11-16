@@ -190,13 +190,89 @@ public class BryanTest {
             ArrayList<Account> expected = new ArrayList<>(List.of(checking));
             Assertions.assertArrayEquals(expected.toArray(), testCustomer1.Accounts.toArray());
         }
+
+        @Test
+        @Order(17)
+        @DisplayName("Ensure Customer apply for loan adds loan to Loans array")
+        public void CustomerApplyForLoanTest(){
+            testCustomer1.applyForLoan(testBank, 5000.00);
+            Assertions.assertArrayEquals(testCustomer1.Loans.toArray(), testBank.Loans.toArray());
+        }
+
+        @Test
+        @Order(18)
+        @DisplayName("Ensure Customer payLoan credits funds from account")
+        public void CustomerPayLoanCreditTest(){
+            testCustomer1.applyForLoan(testBank, 5000.00);
+            testCustomer1.createAccount(checking);
+            testCustomer1.payLoan(500.00, 0, checking);
+            double expected = 4500.00;
+            double actual = testCustomer1.Accounts.get(0).getBalance();
+            Assertions.assertEquals(expected, actual);
+        }
+
+        @Test
+        @Order(19)
+        @DisplayName("Ensure Customer payLoan throws exception when payment > account balance")
+        public void CustomerPayLoanInsufficientFundsTest(){
+            testCustomer1.applyForLoan(testBank, 5000.00);
+            testCustomer1.createAccount(checking);
+            Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () ->
+                    testCustomer1.payLoan(5000.01, 0, checking));
+            String expected = "Insufficient funds. Please choose different account";
+            String actual = exception.getMessage();
+            Assertions.assertEquals(expected, actual);
+        }
+
+        @Test
+        @Order(20)
+        @DisplayName("Ensure Customer payLoan throws exception when loan not present in Loans array")
+        public void CustomerPayLoanNotPresentTest(){
+            testCustomer1.applyForLoan(testBank, 5000.00);
+            testCustomer1.createAccount(checking);
+            Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () ->
+                    testCustomer1.payLoan(5000.01, 3, checking));
+            String expected = "LoanID not found, payment not processed";
+            String actual = exception.getMessage();
+            Assertions.assertEquals(expected, actual);
+        }
+
+        @Test
+        @Order(21)
+        @DisplayName("Ensure Customer payLoan reduces loan amount account")
+        public void CustomerPayLoanReductionTest(){
+            testCustomer1.applyForLoan(testBank, 5000.00);
+            testCustomer1.createAccount(checking);
+            testCustomer1.payLoan(500.00, 0, checking);
+            double expected = 4500.00;
+            double actual = testCustomer1.Loans.get(0).Amount;
+            Assertions.assertEquals(expected, actual);
+        }
     }
 
     @Nested
-    @DisplayName("Customer class tests")
+    @DisplayName("Loan class tests")
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class LoanTest {
-//        TODO Loan test class
+        @Test
+        @Order(22)
+        @DisplayName("Ensure Loan calculates correct EMI")
+        public void LoanEMITest(){
+            testCustomer1.applyForLoan(testBank, 500000.00);
+            double expected = 5625.00;
+            double actual = testCustomer1.Loans.get(0).getEMI();
+            Assertions.assertEquals(expected, actual);
+        }
+
+        @Test
+        @Order(23)
+        @DisplayName("Ensure Loan calculates correct prepayment")
+        public void LoanPrepaymentTest(){
+            testCustomer1.applyForLoan(testBank, 200000.00);
+            double expected = 3500.00;
+            double actual = testCustomer1.Loans.get(0).getPrepayment();
+            Assertions.assertEquals(expected, actual);
+        }
     }
 
 
