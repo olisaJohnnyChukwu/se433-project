@@ -9,8 +9,8 @@ public class Customer {
     private String Address;
     private String PhoneNumber;
     private String EmailAddress;
-    private ArrayList<Account> Accounts;
-    private ArrayList<Loan> Loans;
+    public ArrayList<Account> Accounts;
+    public ArrayList<Loan> Loans;
 
     public Customer(String name, String address, String phone, String email) {
         this.Name = name;

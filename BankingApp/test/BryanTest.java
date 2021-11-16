@@ -182,7 +182,14 @@ public class BryanTest {
     @DisplayName("Customer class tests")
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class CustomerTest {
-//        TODO Customer test class
+        @Test
+        @Order(16)
+        @DisplayName("Ensure Customer createAccount adds to Accounts array")
+        public void CustomerCreateAccountTest(){
+            testCustomer1.createAccount(checking);
+            ArrayList<Account> expected = new ArrayList<>(List.of(checking));
+            Assertions.assertArrayEquals(expected.toArray(), testCustomer1.Accounts.toArray());
+        }
     }
 
     @Nested
