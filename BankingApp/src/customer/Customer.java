@@ -30,11 +30,11 @@ public class Customer {
                     account.creditAmount(payment);
                 }
                 else {
-                    System.out.println("Insufficient funds. Please choose different account");
+                    throw new IllegalArgumentException("Insufficient funds. Please choose different account");
                 }
             }
             else {
-                System.out.println("LoanID not found, payment not processed");
+                throw new IllegalArgumentException("LoanID not found, payment not processed");
             }
         }
     }
