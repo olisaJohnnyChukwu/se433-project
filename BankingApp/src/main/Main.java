@@ -56,7 +56,7 @@ public class Main {
 			System.out.printf("Loan" + l.LoanID + " $%,.2f\n", l.Amount);
 		}
 
-		cust1.payLoan(1000.00, 1, bryan);
+//		cust1.payLoan(1000.00, 1, bryan);
 
 
 

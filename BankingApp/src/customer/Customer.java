@@ -9,8 +9,8 @@ public class Customer {
     private String Address;
     private String PhoneNumber;
     private String EmailAddress;
-    private ArrayList<Account> Accounts;
-    private ArrayList<Loan> Loans;
+    public ArrayList<Account> Accounts;
+    public ArrayList<Loan> Loans;
 
     public Customer(String name, String address, String phone, String email) {
         this.Name = name;
@@ -30,11 +30,11 @@ public class Customer {
                     account.creditAmount(payment);
                 }
                 else {
-                    System.out.println("Insufficient funds. Please choose different account");
+                    throw new IllegalArgumentException("Insufficient funds. Please choose different account");
                 }
             }
             else {
-                System.out.println("LoanID not found, payment not processed");
+                throw new IllegalArgumentException("LoanID not found, payment not processed");
             }
         }
     }
@@ -44,10 +44,8 @@ public class Customer {
     }
 
     public void applyForLoan(Bank bank, Double loanAmount) {
-        bank.addCustomer(this);
         Loan l = bank.addNewLoan(loanAmount);
-        if (l != null) {
-            Loans.add(l);
-        }
+        Loans.add(l);
+        bank.addCustomer(this);
     }
 }

@@ -9,7 +9,7 @@ import loan.*;
 public class Bank {
     public String name;
     public ArrayList<Customer> Customers;
-    private ArrayList<Account> Accounts;
+    public ArrayList<Account> Accounts;
     public ArrayList<Loan> Loans;
 
     public Bank(String name) {
@@ -56,9 +56,9 @@ public class Bank {
             yearsToCompletion = 10;
         }
         else {
-            System.out.println("Loan amount too high.");
-            return null;
+            throw new IllegalArgumentException("Loan amount too high.");
         }
+
         Integer ID = Loans.size();
         Loan newLoan = new Loan(loanAmount, rate, ID, yearsToCompletion);
         Loans.add(newLoan);
