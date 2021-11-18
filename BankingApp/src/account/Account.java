@@ -1,4 +1,6 @@
 package account;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import transaction.*;
 import customer.*;
@@ -14,17 +16,18 @@ public abstract class Account {
     private  double minimumBalance;
     private  int maxTransactionNumber;
     public static final double time = 0.0833;
-    private  double averageDailyBalance;
     private  int countTransactions;
+    private String openingDate;
+
     
-    //private ArrayList<Customer> customers;
+    private ArrayList<Customer> customers;
 
 
     public Account(String accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
-       
-       // customers = new ArrayList<>();
+
+       customers = new ArrayList<>();
     }
 
     public double getInterestRate() {
@@ -57,41 +60,21 @@ public abstract class Account {
                 Transaction transaction =new DepositTransaction(debit);
                 this.balance=transaction.apply(balance);
                 transactions.add(transaction);
-                
             } else {
-                System.out.println("Insufficient funds.");
+                throw new IllegalArgumentException("Insufficient funds.");
             }
-        } else {
-            System.out.println("Credit amount must be greater than zero.");
         }
     }
 
-    /*public void withdrawAmount(double withdrawalAmount) {
-        if (this.balance < withdrawalAmount) {
-            System.out.println("You have insufficient funds.");
-        } else {
-            if (withdrawalAmount <= 0) {
-                System.out.println("The withdrawal amount must be greater than zero.");
-            } else {
-                this.balance -= withdrawalAmount;
-                transactions.add(new Transaction(withdrawalAmount));
-                countTransactions++;
-            }
-
-        }
-    }*/
 
     public void transferAmount(Account toAccount, double transferAmount) {
-        if (this.getBalance() > 0 && transferAmount > 0) {
-           // toAccount.setBalance(toAccount.balance += transferAmount);
-            //this.balance -= transferAmount;
-           // transactions.add(new Transaction(transferAmount));
+        if (this.getBalance() > transferAmount && transferAmount > 0) {
            Transaction transaction=new TransferTransaction(transferAmount, toAccount,this);
            this.balance=transaction.apply(balance);
            transactions.add(transaction);
             countTransactions++;
         } else {
-            System.out.println("Insufficient funds.");
+            throw new IllegalArgumentException("Insufficient funds.");
         }
     }
 
@@ -131,50 +114,30 @@ public abstract class Account {
     }
 
     public double calculateInterestEarned() {
-        interestEarned = averageDailyBalance * interestRate * time;
+        interestEarned = balance * interestRate * time;
         return interestEarned;
     }
 
-    public void addInterest() {
+    public String getOpeningDate() {
+        return openingDate;
+    }
+
+    public void setOpeningDate(String openingDate) {
+        this.openingDate = openingDate;
+    }
+
+    public double addInterest() {
         balance += interestEarned;
+        return balance;
     }
 
     public String printBankStatement(){
         String statement="";
         for(Transaction t:transactions){
             statement+=t.printTransaction()+"\n";
-
         }
         return statement;        
     }
-    /*public void deposit(double deposit) {
-        if (deposit <= 0) {
-            System.out.println("The deposit amount must be greater than zero.");
-        } else {
-            balance += deposit;
-            transactions.add(new Transaction(deposit));
-            countTransactions++;
-
-        }
-    }*/
-
-  /*  public void addCustomer(Customer customer) {
-        if (customers.size() < 1) {
-            this.customer = customer;
-            customers.add(customer);
-        } else {
-            System.out.println("This account already has a customer.");
-        }
-    }
-
-    public void removeCustomer(Customer customer) {
-        if (customers.isEmpty() == false) {
-            customers.remove(customer);
-        } else {
-            System.out.println("This account does not have a customer");
-        }
-    }*/
-
 
 
 }
