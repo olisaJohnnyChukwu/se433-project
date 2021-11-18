@@ -1,8 +1,11 @@
+package tests;
 import account.Account;
 import account.CheckingAccount;
 import account.SavingsAccount;
 import bank.Bank;
 import customer.Customer;
+import transaction.TransactionException;
+
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -202,7 +205,7 @@ public class BryanTest {
         @Test
         @Order(18)
         @DisplayName("Ensure Customer payLoan credits funds from account")
-        public void CustomerPayLoanCreditTest(){
+        public void CustomerPayLoanCreditTest() throws TransactionException{
             testCustomer1.applyForLoan(testBank, 5000.00);
             testCustomer1.createAccount(checking);
             testCustomer1.payLoan(500.00, 0, checking);
@@ -240,7 +243,7 @@ public class BryanTest {
         @Test
         @Order(21)
         @DisplayName("Ensure Customer payLoan reduces loan amount account")
-        public void CustomerPayLoanReductionTest(){
+        public void CustomerPayLoanReductionTest() throws TransactionException{
             testCustomer1.applyForLoan(testBank, 5000.00);
             testCustomer1.createAccount(checking);
             testCustomer1.payLoan(500.00, 0, checking);

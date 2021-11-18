@@ -9,7 +9,7 @@ import customer.*;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws TransactionException {
 		// TODO Auto-generated method stub
 
 		Bank bank=new Bank("UE");
@@ -18,7 +18,7 @@ public class Main {
 
 		Account olisa=new SavingsAccount(accountNumber,5000.0);
 		olisa.creditAmount(700);
-		olisa.debitAmount(800);
+		olisa.creditAmount(800);
 
 
 

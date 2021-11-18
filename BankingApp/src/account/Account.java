@@ -54,46 +54,49 @@ public abstract class Account {
         this.maxTransactionNumber = maxTransactionNumber;
     }
 
-    public void debitAmount(double debit) {
-        if (debit > 0) {
-            if (balance >= debit) {
-                Transaction transaction =new DepositTransaction(debit);
-                this.balance=transaction.apply(balance);
-                transactions.add(transaction);
-            } else {
-                throw new IllegalArgumentException("Insufficient funds.");
-            }
-        }
+    
+    public Transaction debitAmount(double debit) throws TransactionException {
+    	checkBalance(debit);
+        validateAmount(debit);
+        Transaction transaction =new WithdrawTransaction(debit);
+        this.balance=transaction.apply(balance);
+        transactions.add(transaction);
+        
+        
+        return transaction;
+
+
+    }
+    public Transaction transferAmount(Account toAccount, double transferAmount) throws TransactionException {
+        checkBalance(transferAmount);
+        validateAmount(transferAmount);
+        Transaction transaction=new TransferTransaction(transferAmount, toAccount,this);
+        this.balance=transaction.apply(balance);
+        transactions.add(transaction);
+        countTransactions++;
+        
+        return transaction;
+        
     }
 
-
-    public void transferAmount(Account toAccount, double transferAmount) {
-        if (this.getBalance() > transferAmount && transferAmount > 0) {
-           Transaction transaction=new TransferTransaction(transferAmount, toAccount,this);
-           this.balance=transaction.apply(balance);
-           transactions.add(transaction);
-            countTransactions++;
-        } else {
-            throw new IllegalArgumentException("Insufficient funds.");
-        }
-    }
-
-    public void Recieve(Account fromAccount,double debit){
+    public Transaction Recieve(Account fromAccount,double debit){
         
         Transaction transaction =new RecieveTransaction(debit, fromAccount);
         this.balance=transaction.apply(balance);
         transactions.add(transaction);
+        
+        return transaction;
     }
-    public void creditAmount(double credit) {
-        if (credit > 0) {
-            //this.balance += credit;
-            Transaction transaction =new WithdrawTransaction(credit);
-            this.balance=transaction.apply(balance);
-            transactions.add(transaction);
-            countTransactions++;
-        } else {
-            System.out.println("Credit amount must be greater than zero.");
-        }
+
+
+    public Transaction creditAmount(double credit) throws TransactionException {
+        validateAmount(credit);
+        Transaction transaction =new DepositTransaction(credit);
+        this.balance=transaction.apply(balance);
+        transactions.add(transaction);
+        countTransactions++;
+        return transaction;
+
     }
 
     
@@ -135,8 +138,38 @@ public abstract class Account {
         String statement="";
         for(Transaction t:transactions){
             statement+=t.printTransaction()+"\n";
+
         }
-        return statement;        
+        
+        return statement.length()!=0 ?statement:"You have no previous Transactions";
+          
+    }
+   
+
+   
+    
+    
+   
+
+
+    public void validateAmount(Double amount) throws TransactionException{
+        if(amount<=0){
+            throw  new TransactionException("Transaction amount has to be  Than 0");
+        }
+
+        if(amount>=5000){
+            throw  new TransactionException("Transaction amount less Tham  5000");
+        }
+            
+
+    }
+
+    public void checkBalance(Double amount) throws TransactionException{
+        if(amount>balance){
+            throw  new TransactionException("Insufficient funds");
+        }
+
+
     }
 
 

@@ -1,5 +1,7 @@
 package customer;
 import loan.*;
+import transaction.TransactionException;
+
 import java.util.*;
 import bank.*;
 import account.*;
@@ -21,13 +23,13 @@ public class Customer {
         this.Accounts = new ArrayList<>();
     }
 
-    public void payLoan(double payment, int LoanID, Account account) {
+    public void payLoan(double payment, int LoanID, Account account) throws TransactionException {
         for (Loan l : Loans) {
             if (l.LoanID == LoanID) {
                 if (Accounts.contains(account) && account.getBalance() >= payment) {
                     l.Amount -= payment;
                     l.YearsTillCompletion -= (1/12);
-                    account.creditAmount(payment);
+                    account.debitAmount(payment);
                 }
                 else {
                     throw new IllegalArgumentException("Insufficient funds. Please choose different account");

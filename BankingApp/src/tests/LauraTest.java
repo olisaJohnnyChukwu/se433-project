@@ -1,8 +1,11 @@
+package tests;
 import account.Account;
 import account.CheckingAccount;
 import account.SavingsAccount;
 import bank.Bank;
 import customer.Customer;
+import transaction.TransactionException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,18 +61,18 @@ public class LauraTest {
         Assertions.assertEquals(expectedNumber, savings.getMaxTransactionNumber());
     }
 
-    //Debit with sufficient funds
+   //Debit with sufficient funds
     @Test
-    public void debitAmountTest1() {
+    public void debitAmountTest1() throws TransactionException {
         checking.debitAmount(1000);
-        double expected = 6000;
+        double expected = 4000;
         Assertions.assertEquals(expected, checking.getBalance());
     }
 
     //Debit with insufficient funds
     @Test
     public void debitAmountTest2() {
-        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> checking.debitAmount(7000));
+        Exception exception = Assertions.assertThrows(TransactionException.class, () -> checking.debitAmount(5001));
         String expected = "Insufficient funds";
         String actual = exception.getMessage();
         Assertions.assertTrue(actual.contains(expected));
@@ -77,7 +80,7 @@ public class LauraTest {
 
     //Testing with sufficient funds
     @Test
-    public void testTransferAmount1() {
+    public void testTransferAmount1() throws TransactionException {
         savings.transferAmount(checking, 500);
         double expectedCheckingBalance = 5500;
         double expectedSavingsBalance = 9500;
@@ -88,7 +91,7 @@ public class LauraTest {
 
     //Testing with sufficient funds
     @Test
-    public void testTransferAmount2() {
+    public void testTransferAmount2() throws TransactionException {
         checking.transferAmount(savings, 500);
         double expectedCheckingBalance = 4500;
         double expectedSavingsBalance = 10500;
@@ -100,7 +103,8 @@ public class LauraTest {
     //Test without sufficient funds
     @Test
     public void testTransferAmount3() {
-        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> checking.transferAmount(savings, 2000500));
+    	
+        Exception exception = Assertions.assertThrows(TransactionException.class, () -> checking.transferAmount(savings, 2000500));
         String expected = "Insufficient funds";
         String actual = exception.getMessage();
         Assertions.assertTrue(actual.contains(expected));
@@ -109,7 +113,7 @@ public class LauraTest {
     //Test without sufficient funds
     @Test
     public void testTransferAmount4() {
-        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> savings.transferAmount(checking, 2000500));
+        Exception exception = Assertions.assertThrows(TransactionException.class, () -> savings.transferAmount(checking, 2000500));
         String expected = "Insufficient funds";
         String actual = exception.getMessage();
         Assertions.assertTrue(actual.contains(expected));

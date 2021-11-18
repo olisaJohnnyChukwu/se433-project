@@ -6,7 +6,7 @@ public class RecieveTransaction extends Transaction{
 
 
     public  RecieveTransaction(Double amount,Account fromAccount){
-        this.transactionType="Deposit";
+        this.transactionType=TransactionType.RECIEVE;
         this.amount=amount;
         this.transactionId=Transaction.ID;
         this.fromAccount=fromAccount;
@@ -25,6 +25,7 @@ public class RecieveTransaction extends Transaction{
 
 
     public  String printTransaction(){
+    	
 
         return "Transaction type: "+transactionType+ " transactionId: "+transactionId+" amount: "+amount+" sent from "+fromAccount.getAccountNumber()+" balance after transaction: "+balanceAfterTransaction
                 

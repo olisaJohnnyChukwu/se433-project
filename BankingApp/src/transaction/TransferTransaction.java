@@ -8,7 +8,7 @@ public class TransferTransaction extends Transaction{
     Account fromAccount;
 
     public  TransferTransaction (Double amount, Account recieverAccount, Account fromAccount){
-        this.transactionType="Transfer";
+        this.transactionType=TransactionType.TRANSFER;
         this.amount=amount;
         this.transactionId=Transaction.ID;
         this.recieverAccount=recieverAccount;

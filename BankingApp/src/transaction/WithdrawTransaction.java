@@ -5,7 +5,7 @@ public class WithdrawTransaction  extends Transaction{
 
     
     public WithdrawTransaction(Double amount) {
-       this.transactionType="Widthdraw";
+       this.transactionType=TransactionType.WITHDRAW;
        this.amount=amount;
        this.transactionId=Transaction.ID;
         Transaction.ID++;
@@ -22,6 +22,8 @@ public class WithdrawTransaction  extends Transaction{
         return newBalance;
     
     }
+    
+    
 
 
     
