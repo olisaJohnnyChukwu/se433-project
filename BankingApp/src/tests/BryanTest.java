@@ -39,7 +39,7 @@ public class BryanTest {
         @DisplayName("Ensure Bank Customers array is initially empty")
         public void InitializedBankCustomersEmptyTest(){
             int expected = 0;
-            int actual = testBank.Customers.size();
+            int actual = testBank.getCustomers().size();
             Assertions.assertEquals(expected, actual);
         }
 
@@ -48,7 +48,7 @@ public class BryanTest {
         @DisplayName("Ensure Bank Loans array is initially empty")
         public void InitializedBankLoansEmptyTest(){
             int expected = 0;
-            int actual = testBank.Loans.size();
+            int actual = testBank.getLoans().size();
             Assertions.assertEquals(expected, actual);
         }
 
@@ -57,7 +57,7 @@ public class BryanTest {
         @DisplayName("Ensure Bank Accounts array is initially empty")
         public void InitializedBankAccountsEmptyTest(){
             int expected = 0;
-            int actual = testBank.Accounts.size();
+            int actual = testBank.getAccounts().size();
             Assertions.assertEquals(expected, actual);
         }
 
@@ -67,7 +67,7 @@ public class BryanTest {
         public void BankAddAccountTest(){
             ArrayList<Account> expected = new ArrayList<>(List.of(checking));
             testBank.addAccount(checking);
-            Assertions.assertArrayEquals(expected.toArray(), testBank.Accounts.toArray());
+            Assertions.assertArrayEquals(expected.toArray(), testBank.getAccounts().toArray());
         }
 
         @Test
@@ -78,7 +78,7 @@ public class BryanTest {
             testBank.addAccount(checking);
             testBank.addAccount(savings);
             testBank.removeAccount(savings);
-            Assertions.assertArrayEquals(expected.toArray(), testBank.Accounts.toArray());
+            Assertions.assertArrayEquals(expected.toArray(), testBank.getAccounts().toArray());
         }
 
         @Test
@@ -88,7 +88,7 @@ public class BryanTest {
             ArrayList<Account> expected = new ArrayList<>(List.of(checking));
             testBank.addAccount(checking);
             testBank.removeAccount(savings);
-            Assertions.assertArrayEquals(expected.toArray(), testBank.Accounts.toArray());
+            Assertions.assertArrayEquals(expected.toArray(), testBank.getAccounts().toArray());
         }
 
         @Test
@@ -97,7 +97,7 @@ public class BryanTest {
         public void BankAddCustomerTest(){
             ArrayList<Customer> expected = new ArrayList<>(List.of(testCustomer1));
             testBank.addCustomer(testCustomer1);
-            Assertions.assertArrayEquals(expected.toArray(), testBank.Customers.toArray());;
+            Assertions.assertArrayEquals(expected.toArray(), testBank.getCustomers().toArray());;
         }
 
         @Test
@@ -108,7 +108,7 @@ public class BryanTest {
             testBank.addCustomer(testCustomer1);
             testBank.addCustomer(testCustomer2);
             testBank.removeCustomer(testCustomer2);
-            Assertions.assertArrayEquals(expected.toArray(), testBank.Customers.toArray());;
+            Assertions.assertArrayEquals(expected.toArray(), testBank.getCustomers().toArray());;
         }
 
         @Test
@@ -118,7 +118,7 @@ public class BryanTest {
             ArrayList<Customer> expected = new ArrayList<>(List.of(testCustomer2));
             testBank.addCustomer(testCustomer2);
             testBank.removeCustomer(testCustomer1);
-            Assertions.assertArrayEquals(expected.toArray(), testBank.Customers.toArray());
+            Assertions.assertArrayEquals(expected.toArray(), testBank.getCustomers().toArray());
         }
 
         @Test
@@ -127,7 +127,7 @@ public class BryanTest {
         public void BankAddNewLoanTest(){
             testBank.addNewLoan(1000.00);
             int expected = 1;
-            Assertions.assertEquals(expected, testBank.Loans.size());
+            Assertions.assertEquals(expected, testBank.getLoans().size());
         }
 
         @Test
@@ -136,7 +136,7 @@ public class BryanTest {
         public void BankAddNewLoan10000Test(){
             testBank.addNewLoan(9999.99);
             double expected = 0.10;
-            Assertions.assertEquals(expected, testBank.Loans.get(0).Interest);
+            Assertions.assertEquals(expected, testBank.getLoans().get(0).getInterest());
         }
 
         @Test
@@ -145,7 +145,7 @@ public class BryanTest {
         public void BankAddNewLoan50000Test(){
             testBank.addNewLoan(49999.99);
             double expected = 0.08;
-            Assertions.assertEquals(expected, testBank.Loans.get(0).Interest);
+            Assertions.assertEquals(expected, testBank.getLoans().get(0).getInterest());
         }
 
         @Test
@@ -154,7 +154,7 @@ public class BryanTest {
         public void BankAddNewLoan200000Test(){
             testBank.addNewLoan(199999.99);
             double expected = 0.05;
-            Assertions.assertEquals(expected, testBank.Loans.get(0).Interest);
+            Assertions.assertEquals(expected, testBank.getLoans().get(0).getInterest());
         }
 
         @Test
@@ -163,7 +163,7 @@ public class BryanTest {
         public void BankAddNewLoan900000Test(){
             testBank.addNewLoan(899999.99);
             double expected = 0.035;
-            Assertions.assertEquals(expected, testBank.Loans.get(0).Interest);
+            Assertions.assertEquals(expected, testBank.getLoans().get(0).getInterest());
         }
 
         @Test
@@ -191,7 +191,7 @@ public class BryanTest {
         public void CustomerCreateAccountTest(){
             testCustomer1.createAccount(checking);
             ArrayList<Account> expected = new ArrayList<>(List.of(checking));
-            Assertions.assertArrayEquals(expected.toArray(), testCustomer1.Accounts.toArray());
+            Assertions.assertArrayEquals(expected.toArray(), testCustomer1.getAccounts().toArray());
         }
 
         @Test
@@ -199,7 +199,7 @@ public class BryanTest {
         @DisplayName("Ensure Customer apply for loan adds loan to Loans array")
         public void CustomerApplyForLoanTest(){
             testCustomer1.applyForLoan(testBank, 5000.00);
-            Assertions.assertArrayEquals(testCustomer1.Loans.toArray(), testBank.Loans.toArray());
+            Assertions.assertArrayEquals(testCustomer1.getLoans().toArray(), testBank.getLoans().toArray());
         }
 
         @Test
@@ -210,7 +210,7 @@ public class BryanTest {
             testCustomer1.createAccount(checking);
             testCustomer1.payLoan(500.00, 0, checking);
             double expected = 4500.00;
-            double actual = testCustomer1.Accounts.get(0).getBalance();
+            double actual = testCustomer1.getAccounts().get(0).getBalance();
             Assertions.assertEquals(expected, actual);
         }
 
@@ -248,7 +248,7 @@ public class BryanTest {
             testCustomer1.createAccount(checking);
             testCustomer1.payLoan(500.00, 0, checking);
             double expected = 4500.00;
-            double actual = testCustomer1.Loans.get(0).Amount;
+            double actual = testCustomer1.getLoans().get(0).getAmount();
             Assertions.assertEquals(expected, actual);
         }
     }
@@ -263,7 +263,7 @@ public class BryanTest {
         public void LoanEMITest(){
             testCustomer1.applyForLoan(testBank, 500000.00);
             double expected = 5625.00;
-            double actual = testCustomer1.Loans.get(0).getEMI();
+            double actual = testCustomer1.getLoans().get(0).getEMI();
             Assertions.assertEquals(expected, actual);
         }
 
@@ -273,7 +273,7 @@ public class BryanTest {
         public void LoanPrepaymentTest(){
             testCustomer1.applyForLoan(testBank, 200000.00);
             double expected = 3500.00;
-            double actual = testCustomer1.Loans.get(0).getPrepayment();
+            double actual = testCustomer1.getLoans().get(0).getPrepayment();
             Assertions.assertEquals(expected, actual);
         }
     }
