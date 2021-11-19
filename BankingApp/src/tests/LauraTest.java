@@ -1,29 +1,45 @@
 package tests;
-
 import account.Account;
 import account.CheckingAccount;
 import account.SavingsAccount;
 import bank.Bank;
+import customer.Customer;
+import transaction.TransactionException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import transaction.TransactionException;
 
+import java.time.LocalDate;
+import java.util.Date;
+
+//import static org.junit.Assert.assertEquals;
 
 public class LauraTest {
-    private Bank testBank;
-    private SavingsAccount savings;
-    private Account checking;
-    private String openingDate;
-    private CheckingAccount checking2;
+    Bank testBank;
+    Account savings;
+    Account checking;
+    String openingDate;
+    CheckingAccount checking2;
 
     @BeforeEach
     public void setup() {
         testBank = new Bank("Test Bank");
         savings = new SavingsAccount(testBank.generateAccountNumber(), 10000.00);
+        savings.setAccountNumber("123-456-789");
+        savings.setInterestRate(0.07);
+        savings.setMaxTransactionNumber(10);
+        savings.setBalance(10000);
+        savings.setMinimumBalance(500);
         savings.setOpeningDate("11-19-2021");
         checking =  new CheckingAccount(testBank.generateAccountNumber(), 5000.00);
+        checking.setBalance(5000);
+        checking.setMinimumBalance(250);
+        checking.setMaxTransactionNumber(20);
+        checking.setInterestRate(0.001);
+        checking.setAccountNumber("789-456-123");
         checking2 = new CheckingAccount(testBank.generateAccountNumber(), 750);
+        checking2.setAccountNumber("111-222-333");
 
     }
 
@@ -41,11 +57,11 @@ public class LauraTest {
 
     @Test
     public void testMaxTransactionNumber() {
-        int expectedNumber = 6;
+        int expectedNumber = 10;
         Assertions.assertEquals(expectedNumber, savings.getMaxTransactionNumber());
     }
 
-    //Debit with sufficient funds
+   //Debit with sufficient funds
     @Test
     public void debitAmountTest1() throws TransactionException {
         checking.debitAmount(1000);
@@ -87,7 +103,7 @@ public class LauraTest {
     //Test without sufficient funds
     @Test
     public void testTransferAmount3() {
-
+    	
         Exception exception = Assertions.assertThrows(TransactionException.class, () -> checking.transferAmount(savings, 2000500));
         String expected = "Insufficient funds";
         String actual = exception.getMessage();
