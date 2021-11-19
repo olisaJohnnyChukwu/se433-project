@@ -11,8 +11,8 @@ public class Customer {
     private String Address;
     private String PhoneNumber;
     private String EmailAddress;
-    public ArrayList<Account> Accounts;
-    public ArrayList<Loan> Loans;
+    private ArrayList<Account> Accounts;
+    private ArrayList<Loan> Loans;
 
     public Customer(String name, String address, String phone, String email) {
         this.Name = name;
@@ -25,10 +25,9 @@ public class Customer {
 
     public void payLoan(double payment, int LoanID, Account account) throws TransactionException {
         for (Loan l : Loans) {
-            if (l.LoanID == LoanID) {
+            if (l.getLoanID() == LoanID) {
                 if (Accounts.contains(account) && account.getBalance() >= payment) {
-                    l.Amount -= payment;
-                    l.YearsTillCompletion -= (1/12);
+                    l.loanPayment(payment);
                     account.debitAmount(payment);
                 }
                 else {
@@ -50,4 +49,8 @@ public class Customer {
         Loans.add(l);
         bank.addCustomer(this);
     }
+
+    public ArrayList<Account> getAccounts() {return Accounts;}
+
+    public ArrayList<Loan> getLoans() {return Loans;}
 }

@@ -1,5 +1,4 @@
 package bank;
-import transaction.*;
 import java.util.*;
 
 import account.*;
@@ -7,10 +6,10 @@ import customer.*;
 import loan.*;
 
 public class Bank {
-    public String name;
-    public ArrayList<Customer> Customers;
-    public ArrayList<Account> Accounts;
-    public ArrayList<Loan> Loans;
+    private String name;
+    private ArrayList<Customer> Customers;
+    private ArrayList<Account> Accounts;
+    private ArrayList<Loan> Loans;
 
     public Bank(String name) {
         this.name = name;
@@ -79,5 +78,11 @@ public class Bank {
     return accountNo;
     
     }
+
+    public ArrayList<Customer> getCustomers() {return Customers;}
+
+    public ArrayList<Account> getAccounts() {return Accounts;}
+
+    public ArrayList<Loan> getLoans() {return Loans;}
 
 }
