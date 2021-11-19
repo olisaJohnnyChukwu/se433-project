@@ -56,6 +56,18 @@ public class Main {
 			System.out.printf("Loan" + l.LoanID + " $%,.2f\n", l.Amount);
 		}
 
+		System.out.println("****New Checking Account****");
+		String checkingAcctNumber = bank.generateAccountNumber();
+		CheckingAccount checkingAcct = new CheckingAccount(checkingAcctNumber, 1500);
+		System.out.println("Your new debit card number is: " + checkingAcct.generateDebitCardNumber());
+		System.out.println("Your new debit card number is: " + checkingAcct.generateDebitCardPin());
+
+		System.out.println("****New Savings Account****");
+		String savingsAccountNumber = bank.generateAccountNumber();
+		SavingsAccount savings = new SavingsAccount(savingsAccountNumber, 20000);
+		System.out.println("Your annual interest earned will be: $" + savings.calculateAnnualInterestEarned());
+
+
 //		cust1.payLoan(1000.00, 1, bryan);
 
 
