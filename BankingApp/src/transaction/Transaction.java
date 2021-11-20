@@ -2,20 +2,21 @@ package transaction;
 
 public abstract class Transaction {
     protected int  transactionId ;
-    protected  Double amount;
-    protected  TransactionType transactionType;
+    protected  Double amount;//The amount of the transaction
+    protected  TransactionType transactionType;//type of transaction
     protected  static int ID=1000;
-    protected  Double balanceAfterTransaction;
+    protected  Double balanceAfterTransaction;//current balance after transaction
     
 
 
 
    public  String printTransaction(){
-
-        return "Transaction type: "+transactionType+ " transactionId: "+transactionId+" amount: "+amount+" balanceAfterTransaction: "+balanceAfterTransaction;
-       
+	   //concat the class variables to form transaction statement;
+	   return transactionType+" "+amount+" id "+transactionId+" balance "+balanceAfterTransaction;
    };
-
+   
+   
+   //this abstract method executes the different variations of transactions in the sub class
     public abstract Double apply(Double balance);
 
 
@@ -27,14 +28,9 @@ public abstract class Transaction {
 		
 	}
 
-	public void setTransactionId(int transactionId) {
-		this.transactionId = transactionId;
-	}
+	
 
-	public TransactionType getTransactionType() {
-		return transactionType;
-	}
-
+	
 	
 
 	
