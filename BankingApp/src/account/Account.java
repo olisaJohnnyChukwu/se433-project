@@ -68,12 +68,24 @@ public abstract class Account {
 
 
     }
+    
+    /**
+     * 
+     *
+     * @param  	Account toAccount   Reciever account
+     * @return    Transaction object
+     */
     public Transaction transferAmount(Account toAccount, double transferAmount) throws TransactionException {
-        checkBalance(transferAmount);
-        validateAmount(transferAmount);
+        checkBalance(transferAmount);//check if the balance of the account is  sufficient for the transacation
+        validateAmount(transferAmount);//check transaction is more than zero and  and less than 5000;
+        
+        //create a new transfer transaction with the user account as an argument
         Transaction transaction=new TransferTransaction(transferAmount, toAccount,this);
+        //execute the transaction and update the balance
         this.balance=transaction.apply(balance);
+        //add to the list of transaction
         transactions.add(transaction);
+        //update the count 
         countTransactions++;
         
         return transaction;
@@ -81,7 +93,7 @@ public abstract class Account {
     }
 
     public Transaction Recieve(Account fromAccount,double debit){
-        
+        //
         Transaction transaction =new RecieveTransaction(debit, fromAccount);
         this.balance=transaction.apply(balance);
         transactions.add(transaction);
@@ -147,12 +159,14 @@ public abstract class Account {
     }
    
     public void validateAmount(Double amount) throws TransactionException{
+
         if(amount<=0){
             throw  new TransactionException("Transaction amount has to be greater than 0");
         }
 
         if(amount>=max){
             throw  new TransactionException("Transaction amount has to be less Than " + max);
+
         }
             
 
