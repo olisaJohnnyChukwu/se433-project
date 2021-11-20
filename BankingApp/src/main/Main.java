@@ -47,16 +47,16 @@ public class Main {
 		cust1.applyForLoan(MainBank, 500000.00);
 		cust1.createAccount(bryan);
 		cust1.payLoan(1000.00, 0, bryan);
-		for (Loan l: MainBank.Loans) {
-			System.out.printf("Loan" + l.LoanID + " EMI: $%,.2f\n", l.getEMI());
-			System.out.printf("Loan" + l.LoanID + " Prepayment penalty: $%,.2f\n", l.getPrepayment());
+		for (Loan l: MainBank.getLoans()) {
+			System.out.printf("Loan" + l.getLoanID() + " EMI: $%,.2f\n", l.getEMI());
+			System.out.printf("Loan" + l.getLoanID() + " Prepayment penalty: $%,.2f\n", l.getPrepayment());
 
 		}
 		System.out.println("Bryan acct balance before: " + bryan.getBalance());
 		cust1.payLoan(1000.00, 0, bryan);
 		System.out.println("Bryan acct balance after: " + bryan.getBalance());
-		for (Loan l: MainBank.Loans) {
-			System.out.printf("Loan" + l.LoanID + " $%,.2f\n", l.Amount);
+		for (Loan l: MainBank.getLoans()) {
+			System.out.printf("Loan" + l.getLoanID() + " $%,.2f\n", l.getAmount());
 		}
 
 //		cust1.payLoan(1000.00, 1, bryan);

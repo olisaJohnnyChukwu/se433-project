@@ -16,6 +16,7 @@ public abstract class Account {
     private  double minimumBalance;
     private  int maxTransactionNumber;
     public static final double time = 0.0833;
+    public static final int max = 5000;
     private  int countTransactions;
     private String openingDate;
 
@@ -157,20 +158,15 @@ public abstract class Account {
           
     }
    
-
-   
-    
-    
-   
-
-
     public void validateAmount(Double amount) throws TransactionException{
-        if(amount<=0.0){
-            throw  new TransactionException("Transaction amount has to be  Than 0");
+
+        if(amount<=0){
+            throw  new TransactionException("Transaction amount has to be greater than 0");
         }
 
-        if(amount>=5000.0){
-            throw  new TransactionException("Transaction amount less Tham  5000");
+        if(amount>=max){
+            throw  new TransactionException("Transaction amount has to be less Than " + max);
+
         }
             
 
