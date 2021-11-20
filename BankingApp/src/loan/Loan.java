@@ -2,10 +2,10 @@ package loan;
 
 
 public class Loan {
-    public double Amount;
-    public double Interest;
-    public int LoanID;
-    public int YearsTillCompletion;
+    private double Amount;
+    private double Interest;
+    private int LoanID;
+    private int YearsTillCompletion;
 
     public Loan(Double amount, Double interest, Integer loanID, Integer years) {
         this.Amount = amount;
@@ -23,4 +23,16 @@ public class Loan {
     public Double getPrepayment() {
         return ((Amount * Interest) / 12) * 6;
     }
+
+    public void loanPayment(double payment) {
+        Amount -= payment;
+        YearsTillCompletion -= (1/12);
+    }
+
+    public double getAmount() { return Amount;}
+
+    public  double getInterest() { return Interest;}
+
+    public int getLoanID() { return LoanID;}
+    
 }

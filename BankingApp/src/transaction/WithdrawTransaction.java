@@ -17,7 +17,6 @@ public class WithdrawTransaction  extends Transaction{
     
         Double newBalance=balance-amount;
         this.balanceAfterTransaction=newBalance;
-
         System.out.println(printTransaction());
         return newBalance;
     
